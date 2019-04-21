@@ -62,7 +62,7 @@ public class Prediction {
 				//Show next hands.
 				System.out.println("\n・待ち札");
 				for(int i=0;i<3;i++) {
-					System.out.println(party[selected[addr[((count%addr.length)+(i+1))%addr.length]]]);
+					System.out.println(party[selected[addr[((count%addr.length)+i)%addr.length]]]);
 				}
 				System.out.println("\n");
 			}
