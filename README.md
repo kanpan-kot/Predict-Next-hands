@@ -8,3 +8,7 @@ Eclipse,IntelliJ等のjavaのIDEさえセットアップすれば，あとはこ
 
 ## 困ったことがあったら
 乾パンの[Twitter](https://twitter.com/kanpan_kot)にリプかDMを送ってください．
+
+## 追記
+うまく次のドローが読めないバグを発見しました．
+改善するまでは使っても無意味なツールです...
