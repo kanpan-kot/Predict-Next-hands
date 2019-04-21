@@ -100,9 +100,6 @@ public class Prediction {
 					}
 					flg++;
 				}
-				for(int i=0;i<order.length;i++) {
-					System.out.println(order[i]);
-				}
 				
 				if(flg == 1) {
 					for(int i=0;i<next.length;i++) {
