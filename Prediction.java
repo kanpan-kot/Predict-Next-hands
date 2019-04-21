@@ -12,7 +12,7 @@ public class Prediction {
 		int next[] = new int[16];
 		int addr[] = new int[16];
 		int hand[] = new int[4]; 
-		int count=0,flg=0,turn=0,move=0;
+		int count=0,flg=0,turn=0,move=0,tsp=0;
 		String str = null;
 		
 		while(true) {
@@ -59,10 +59,16 @@ public class Prediction {
 			}
 			
 			if(flg > 2) {
+				if(count%4==0)
+					tsp = count;
 				//Show next hands.
 				System.out.println("\n・待ち札");
-				for(int i=0;i<3;i++) {
+				for(int i=0;i<3-count%4;i++) {
 					System.out.println(party[selected[addr[((count%addr.length)+i)%addr.length]]]);
+				}
+				System.out.println("\n・次のターン");
+				for(int i=0;i<4;i++) {
+					System.out.println(party[selected[addr[((tsp%addr.length)+i+3)%addr.length]]]);
 				}
 				System.out.println("\n");
 			}
@@ -81,34 +87,21 @@ public class Prediction {
 				}
 				
 				//Judge order.
-				for(int k=0;k<order.length;k++) {
-					if(count>selected.length && order[k]==0) {
-						for(int i=0; i<order.length;i++) {
-							for(int j=8;j<pop.length;j++) {
+				if(count == selected.length-1) {
+					for(int i=0;i<order.length;i++) {
+						if(order[i]==0) {
+							for(int j=order.length;j<pop.length;j++) {
 								if(order[i]!=0) 
 									break;
 								if(selected[i]==pop[j])
 									order[i] = j-i;
 							}
-							if(order[i]==0) {
-								for(int j=0;j<count%selected.length;j++) {
-									if(order[i]!=0) 
-										break;
-									if(selected[i]==pop[j])
-										order[i] = j-i;
-								}
-							}
 						}
 					}
+					flg++;
 				}
-				
 				for(int i=0;i<order.length;i++) {
-					if(order[i]!=0) {
-						flg = 1;
-					}else {
-						flg = 0;
-						break;
-					}
+					System.out.println(order[i]);
 				}
 				
 				if(flg == 1) {
@@ -124,7 +117,7 @@ public class Prediction {
 				//Set new hand.
 				for(int i=0;i<hand.length;i++) {
 					if(hand[i]==selected[count%selected.length]) {
-						hand[i] = selected[addr[count%selected.length]];
+						hand[i] = selected[addr[(count%addr.length)%addr.length]];
 					}
 				}
 			}
