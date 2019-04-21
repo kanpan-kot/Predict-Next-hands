@@ -4,7 +4,7 @@ import java.io.*;
 
 public class Prediction {
 	public static void main(String[] args)throws IOException{
-		String[] party = {"ƒRƒgƒ_ƒ}ƒ“1","ƒRƒgƒ_ƒ}ƒ“2","ƒRƒgƒ_ƒ}ƒ“3","ƒRƒgƒ_ƒ}ƒ“4","ƒRƒgƒ_ƒ}ƒ“5","ƒRƒgƒ_ƒ}ƒ“6","ƒRƒgƒ_ƒ}ƒ“7","ƒRƒgƒ_ƒ}ƒ“8","ƒRƒgƒ_ƒ}ƒ“9","ƒRƒgƒ_ƒ}ƒ“10","ƒRƒgƒ_ƒ}ƒ“11","ƒRƒgƒ_ƒ}ƒ“12"};
+		String[] party = {"ã‚³ãƒˆãƒ€ãƒãƒ³1","ã‚³ãƒˆãƒ€ãƒãƒ³2","ã‚³ãƒˆãƒ€ãƒãƒ³3","ã‚³ãƒˆãƒ€ãƒãƒ³4","ã‚³ãƒˆãƒ€ãƒãƒ³5","ã‚³ãƒˆãƒ€ãƒãƒ³6","ã‚³ãƒˆãƒ€ãƒãƒ³7","ã‚³ãƒˆãƒ€ãƒãƒ³8","ã‚³ãƒˆãƒ€ãƒãƒ³9","ã‚³ãƒˆãƒ€ãƒãƒ³10","ã‚³ãƒˆãƒ€ãƒãƒ³11","ã‚³ãƒˆãƒ€ãƒãƒ³12"};
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		int selected[] = new int[16];
 		int pop[] = new int[16];
@@ -26,7 +26,7 @@ public class Prediction {
 			
 			//Set your hands.
 			if(count==0) {
-				System.out.println("‰ŠúèD‚ğ¶‚©‚ç‡”Ô‚É”Ô†‚ğ”¼Šp‚Å“ü—Í‚µ‚Ä‚­‚¾‚³‚¢D");
+				System.out.println("åˆæœŸæ‰‹æœ­ã‚’å·¦ã‹ã‚‰é †ç•ªã«ç•ªå·ã‚’åŠè§’ã§å…¥åŠ›ã—ã¦ãã ã•ã„ï¼");
 				for(int i=0; i<hand.length; i++) {
 					str = br.readLine();
 					hand[i] = Integer.parseInt(str);
@@ -34,7 +34,7 @@ public class Prediction {
 			}
 			
 			//Show your hands.
-			System.out.println("EŒ»İ‚ÌèD");
+			System.out.println("ãƒ»ç¾åœ¨ã®æ‰‹æœ­");
 			for(int i=0;i<hand.length;i++) {
 				System.out.print(party[hand[i]] + " ");
 				if(i==hand.length-1)
@@ -43,7 +43,7 @@ public class Prediction {
 			
 			turn = (count/4)+1;
 			move = count+1;
-			System.out.println("Œ»İ‚Ìƒ^[ƒ“”F"+ turn + "ƒ^[ƒ“–Ú\nE" + move + "è–Ú\n");
+			System.out.println("ç¾åœ¨ã®ã‚¿ãƒ¼ãƒ³æ•°ï¼š"+ turn + "ã‚¿ãƒ¼ãƒ³ç›®\nãƒ»" + move + "æ‰‹ç›®\n");
 			
 			if(flg ==2) {
 				//Set addr[].
@@ -60,9 +60,9 @@ public class Prediction {
 			
 			if(flg > 2) {
 				//Show next hands.
-				System.out.println("\nE‘Ò‚¿D");
+				System.out.println("\nãƒ»å¾…ã¡æœ­");
 				for(int i=0;i<3;i++) {
-					System.out.println(party[selected[addr[(count%16)+(i+1)]]]);
+					System.out.println(party[selected[addr[((count%addr.length)+(i+1))%addr.length]]]);
 				}
 				System.out.println("\n");
 			}
@@ -116,7 +116,7 @@ public class Prediction {
 						next[i] = (i + order[i%order.length]) % 16;
 					}
 					flg++;
-					System.out.println("\n\n\n—”—ñ‚ğ“Á’è‚µ‚Ü‚µ‚½D\n‚±‚±‚©‚ç‚Íg—p‚µ‚½ƒRƒgƒ_ƒ}ƒ“‚Ì‚İ“ü—Í‚µ‚Ä‚­‚¾‚³‚¢D\n‰½‚©“ü—Í‚µ‚Ä‚­‚¾‚³‚¢D");
+					System.out.println("\n\n\nä¹±æ•°åˆ—ã‚’ç‰¹å®šã—ã¾ã—ãŸï¼\nã“ã“ã‹ã‚‰ã¯ä½¿ç”¨ã—ãŸã‚³ãƒˆãƒ€ãƒãƒ³ã®ã¿å…¥åŠ›ã—ã¦ãã ã•ã„ï¼\nä½•ã‹å…¥åŠ›ã—ã¦ãã ã•ã„ï¼");
 					br.readLine();
 					System.out.println("\n\n\n");
 				}
@@ -135,23 +135,23 @@ public class Prediction {
 	}
 	
 	public static void EnterSelectedKotodaman(int hand[], String str, BufferedReader br, int selected[], int count) throws IOException{
-		System.out.println("g‚Á‚½ƒRƒgƒ_ƒ}ƒ“‚Ì”Ô†‚ğ”¼Šp‚Å“ü—Í‚µ‚Ä‚­‚¾‚³‚¢D");
+		System.out.println("ä½¿ã£ãŸã‚³ãƒˆãƒ€ãƒãƒ³ã®ç•ªå·ã‚’åŠè§’ã§å…¥åŠ›ã—ã¦ãã ã•ã„ï¼");
 		str = br.readLine();
 		if(JudgeEntered(Integer.parseInt(str),hand)==true) {
 			selected[count%selected.length] = Integer.parseInt(str);
 		}else {
-			System.out.println("³‚µ‚¢”š‚ğ“ü—Í‚µ‚Ä‚­‚¾‚³‚¢D\n\n");
+			System.out.println("æ­£ã—ã„æ•°å­—ã‚’å…¥åŠ›ã—ã¦ãã ã•ã„ï¼\n\n");
 			EnterSelectedKotodaman(hand,str,br,selected,count);
 		}
 	}
 	
 	public static void EnterPoppedKotodaman(int[] hand, String str, BufferedReader br, int[] pop, int count)throws IOException {
-		System.out.println("o‚Ä‚«‚½ƒRƒgƒ_ƒ}ƒ“‚Ì”Ô†‚ğ”¼Šp‚Å“ü—Í‚µ‚Ä‚­‚¾‚³‚¢D");
+		System.out.println("å‡ºã¦ããŸã‚³ãƒˆãƒ€ãƒãƒ³ã®ç•ªå·ã‚’åŠè§’ã§å…¥åŠ›ã—ã¦ãã ã•ã„ï¼");
 		str = br.readLine();
 		if(JudgeEntered(Integer.parseInt(str),hand) == false) {
 			pop[count%pop.length] = Integer.parseInt(str);
 		}else {
-			System.out.println("³‚µ‚¢”š‚ğ“ü—Í‚µ‚Ä‚­‚¾‚³‚¢D\n\n");
+			System.out.println("æ­£ã—ã„æ•°å­—ã‚’å…¥åŠ›ã—ã¦ãã ã•ã„ï¼\n\n");
 			EnterPoppedKotodaman(hand,str,br,pop,count);
 		}
 	}
