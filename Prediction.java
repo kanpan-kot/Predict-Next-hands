@@ -8,11 +8,11 @@ public class Prediction {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int selected[] = new int[16];
         int pop[] = new int[16];
-        int order[] = new int[8];
-        int next[] = new int[16];
-        int addr[] = new int[16];
-        int hand[] = new int[4];
-        int count=0,flg=0,turn=0,move=0,tsp=0,maxlen=0;
+        final int order[] = new int[8];
+        final int next[] = new int[16];
+        final int addr[] = new int[16];
+        int hand[] = {-1, -1, -1, -1};
+        int count=0,flg=0,turn=0,move=0,turnstartpoint=0,maxlen=0,rest = 0;
         String str = null;
 
         while(true) {
@@ -36,15 +36,9 @@ public class Prediction {
             move = count+1;
             System.out.println("現在のターン数："+ turn + "ターン目\n・" + move + "手目\n");
 
-            if(flg ==2) {
-                //Set addr[].
-                Setaddr(addr,next);
-                flg++;
-            }
-
-            if(flg > 2) {
+            if(flg > 0) {
                 if(count%4==0)
-                    tsp = count;
+                    turnstartpoint = count;
                 //Show next hands.
                 System.out.println("\n・待ち札");
                 for(int i=0;i<3-count%4;i++) {
@@ -52,7 +46,7 @@ public class Prediction {
                 }
                 System.out.println("\n・次のターン");
                 for(int i=0;i<4;i++) {
-                    System.out.println(party[selected[addr[((tsp%addr.length)+i+3)%addr.length]]]);
+                    System.out.println(party[selected[addr[((turnstartpoint%addr.length)+i+3)%addr.length]]]);
                 }
                 System.out.println("\n");
             }
@@ -60,7 +54,7 @@ public class Prediction {
             //Enter selected kotodaman.
             EnterSelectedKotodaman(hand,str,br,selected,count);
 
-            if(flg < 2) {
+            if(flg == 0) {
                 //Enter popped kotodaman.
                 EnterPoppedKotodaman(hand,str,br,pop,count);
 
@@ -68,28 +62,30 @@ public class Prediction {
                 SwitchHand(hand,selected,pop[count%selected.length],count);
 
                 //Judge order.
-                if(count == selected.length-1) {
+                if(count == selected.length-2) {
                     for(int i=0;i<order.length;i++) {
-                        if(order[i]==0) {
-                            for(int j=order.length;j<pop.length;j++) {
-                                if(order[i]!=0)
-                                    break;
-                                if(selected[i]==pop[j])
-                                    order[i] = j-i;
-                            }
+                    	for(int j=order.length;j<pop.length;j++) {
+                            if(order[i]!=0)
+                                break; 
+                            if(selected[i]==pop[j]) {
+                                order[i] = j-i;
+                            	break;
+                    		}
                         }
+                    	if(order[i] == 0)
+                    		rest = i;
                     }
-                    flg++;
-                }
-
-                if(flg == 1) {
+                    order[rest] = count + 1 - rest;
                     for(int i=0;i<next.length;i++) {
                         next[i] = (i + order[i%order.length]) % 16;
                     }
-                    flg++;
                     System.out.println("\n\n\n乱数列を特定しました．\nここからは使用したコトダマンのみ入力してください．\n何か入力してください．");
                     br.readLine();
                     System.out.println("\n\n\n");
+                    
+                    //Set addr[].
+                    Setaddr(addr,next);
+                    flg++;
                 }
             }else {
                 //Set new hand.
@@ -101,15 +97,24 @@ public class Prediction {
         }
     }
 
-    public static void SetHands(int[] hand, String str, BufferedReader br)throws IOException {
+    static void SetHands(int[] hand, String str , BufferedReader br)throws IOException {
         System.out.println("初期手札を左から順番に番号を半角で入力してください．");
         for(int i=0; i<hand.length; i++) {
-            str = br.readLine();
-            hand[i] = Integer.parseInt(str);
+            SetHandsContent(hand, i, str, br);
         }
     }
+    
+    static void SetHandsContent(int[] hand, int i, String str, BufferedReader br)throws IOException {
+    	str = br.readLine();
+    	if(JudgeEntered(Integer.parseInt(str), hand) == false && Integer.parseInt(str) >= 0 && Integer.parseInt(str) <= 11) {
+    		hand[i] = Integer.parseInt(str);
+    	}else {
+    		System.out.println("正しい数字を入力してください．\n\n");
+    		SetHandsContent(hand, i, str, br);
+    	}
+    }
 
-    public static void ShowHands(int[] hand, String[] party) {
+    static void ShowHands(int[] hand, String[] party) {
         System.out.println("・現在の手札");
         for(int i=0;i<hand.length;i++) {
             System.out.print(party[hand[i]] + " ");
@@ -118,7 +123,7 @@ public class Prediction {
         }
     }
 
-    public static void EnterSelectedKotodaman(int[] hand, String str, BufferedReader br, int[] selected, int count) throws IOException{
+    static void EnterSelectedKotodaman(int[] hand, String str, BufferedReader br, int[] selected, int count) throws IOException{
         System.out.println("使ったコトダマンの番号を半角で入力してください．");
         str = br.readLine();
         if(JudgeEntered(Integer.parseInt(str),hand)==true) {
@@ -129,7 +134,7 @@ public class Prediction {
         }
     }
 
-    public static void EnterPoppedKotodaman(int[] hand, String str, BufferedReader br, int[] pop, int count)throws IOException {
+    static void EnterPoppedKotodaman(int[] hand, String str, BufferedReader br, int[] pop, int count)throws IOException {
         System.out.println("出てきたコトダマンの番号を半角で入力してください．");
         str = br.readLine();
         if(JudgeEntered(Integer.parseInt(str),hand) == false) {
@@ -140,7 +145,7 @@ public class Prediction {
         }
     }
 
-    public static boolean JudgeEntered(int enter,int hand[]) {
+    static boolean JudgeEntered(int enter,int hand[]) {
         for(int i=0;i<hand.length;i++) {
             if(enter == hand[i]) {
                 return true;
@@ -149,7 +154,7 @@ public class Prediction {
         return false;
     }
 
-    public static void ShowParty(String[] party) {
+    static void ShowParty(String[] party) {
         for(int i=0;i<party.length;i++) {
             System.out.printf("%-7s", party[i]);
             if(i<10)
@@ -164,7 +169,7 @@ public class Prediction {
         System.out.print("\n");
     }
 
-    public static void Setaddr(int[] addr, int[] next) {
+    static void Setaddr(int[] addr, int[] next) {
         for(int i=0;i<addr.length;i++) {
             for(int j=0;j<next.length;j++) {
                 if(next[j]==i) {
@@ -175,7 +180,7 @@ public class Prediction {
         }
     }
 
-    public static void SetParty(String[] party, BufferedReader br, int maxlen)throws IOException {
+    static void SetParty(String[] party, BufferedReader br, int maxlen)throws IOException {
         System.out.println("パーティに入っているコトダマンの名前をすべて入力してください．");
         for(int i=0;i<party.length;i++) {
             party[i] = br.readLine();
@@ -189,7 +194,7 @@ public class Prediction {
         }
     }
 
-    public static void SwitchHand(int[] hand, int[] selected, int nextkotnum, int count) {
+    static void SwitchHand(int[] hand, int[] selected, int nextkotnum, int count) {
         for(int i=0;i<hand.length;i++) {
             if(hand[i]==selected[count%selected.length])
                 hand[i] = nextkotnum;
