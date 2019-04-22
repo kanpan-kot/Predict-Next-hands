@@ -65,10 +65,7 @@ public class Prediction {
 				EnterPoppedKotodaman(hand,str,br,pop,count);
 				
 				//Set new hand.
-				for(int i=0;i<hand.length;i++) {
-					if(hand[i]==selected[count%selected.length])
-						hand[i] = pop[count%selected.length];
-				}
+				SwitchHand(hand,selected,pop[count%selected.length],count);
 				
 				//Judge order.
 				if(count == selected.length-1) {
@@ -96,11 +93,7 @@ public class Prediction {
 				}
 			}else {
 				//Set new hand.
-				for(int i=0;i<hand.length;i++) {
-					if(hand[i]==selected[count%selected.length]) {
-						hand[i] = selected[addr[(count%addr.length)%addr.length]];
-					}
-				}
+				SwitchHand(hand, selected, selected[addr[(count%addr.length)%addr.length]], count);
 			}
 			
 			System.out.println("\n-------------------------------------------------------\n");
@@ -187,11 +180,17 @@ public class Prediction {
 			if(party[i].length() > maxlen) 
 				maxlen = party[i].length();
 		}
-		System.out.println(maxlen);
 		for(int i = 0;i<party.length;i++) {
 			for(int j=0;j<maxlen-party[i].length();j++) {
 				party[i] = party[i] + "　";
 			}
+		}
+	}
+	
+	public static void SwitchHand(int[] hand, int[] selected, int nextkotnum, int count) {
+		for(int i=0;i<hand.length;i++) {
+			if(hand[i]==selected[count%selected.length])
+				hand[i] = nextkotnum;
 		}
 	}
 }
