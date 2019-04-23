@@ -202,7 +202,7 @@ public class Prediction {
             try {
                 System.out.print("ファイルの名称を決定してください．: ");
                 str = br.readLine();
-                PrintWriter p = new PrintWriter(new BufferedWriter(new FileWriter("C:\\Users\\azhid\\IdeaProjects\\Kotodaman\\src\\kotodaman\\" + str + ".csv", false)));
+                PrintWriter p = new PrintWriter(new BufferedWriter(new FileWriter("保存した場所" + str + ".csv", false)));
 
                 // 内容をセットする
                 for(int i = 0; i < party.length; i++){
@@ -238,7 +238,7 @@ public class Prediction {
             try {
                 System.out.println("\nパーティを保存したcsvファイルの名称を拡張子を付けずに入力してください．");
                 str = br.readLine();
-                BufferedReader bfr = new BufferedReader(new InputStreamReader(new FileInputStream("C:\\Users\\azhid\\IdeaProjects\\Kotodaman\\src\\kotodaman\\" + str + ".csv")));
+                BufferedReader bfr = new BufferedReader(new InputStreamReader(new FileInputStream("保存した場所" + str + ".csv")));
 
                 for(int i=0;i<party.length;i++){
                     party[i] = bfr.readLine();
