@@ -1,7 +1,6 @@
 package kotodaman;
 
 import java.io.*;
-import java.nio.Buffer;
 
 public class Prediction {
     public static void main(String[] args)throws IOException{
@@ -68,9 +67,9 @@ public class Prediction {
                 if(count == selected.length-2) {
                     for(int i=0;i<order.length;i++) {
                         for(int j=order.length;j<pop.length;j++) {
-                            if(order[i]!=0)
+                            if(order[i] != 0)
                                 break;
-                            if(selected[i]==pop[j]) {
+                            if(selected[i] == pop[j]) {
                                 order[i] = j-i;
                                 break;
                             }
@@ -122,6 +121,13 @@ public class Prediction {
     private static void EnterSelectedKotodaman(int[] hand, String str, BufferedReader br, int[] selected, int count) throws IOException{
         System.out.println("使ったコトダマンの番号を半角で入力してください．");
         str = br.readLine();
+        /*try{
+            Integer.parseInt(str);
+        }catch(NumberFormatException e){
+            System.out.println("\n半角数字を入力してください．");
+            EnterSelectedKotodaman(hand,str,br,selected,count);
+        }*/
+
         if(JudgeEntered(Integer.parseInt(str),hand)) {
             selected[count%selected.length] = Integer.parseInt(str);
         }else {
@@ -133,6 +139,13 @@ public class Prediction {
     private static void EnterPoppedKotodaman(int[] hand, String str, BufferedReader br, int[] pop, int count)throws IOException {
         System.out.println("出てきたコトダマンの番号を半角で入力してください．");
         str = br.readLine();
+        /*
+        try{
+            Integer.parseInt(str);
+        }catch(NumberFormatException e){
+            System.out.println("\n半角数字を入力してください．");
+            EnterPoppedKotodaman(hand,str,br,pop,count);
+        }*/
         if(!(JudgeEntered(Integer.parseInt(str),hand))) {
             pop[count%pop.length] = Integer.parseInt(str);
         }else {
@@ -189,7 +202,7 @@ public class Prediction {
             try {
                 System.out.print("ファイルの名称を決定してください．: ");
                 str = br.readLine();
-                PrintWriter p = new PrintWriter(new BufferedWriter(new FileWriter("ファイルの場所" + str + ".csv", false)));
+                PrintWriter p = new PrintWriter(new BufferedWriter(new FileWriter("C:\\Users\\azhid\\IdeaProjects\\Kotodaman\\src\\kotodaman\\" + str + ".csv", false)));
 
                 // 内容をセットする
                 for(int i = 0; i < party.length; i++){
@@ -225,7 +238,7 @@ public class Prediction {
             try {
                 System.out.println("\nパーティを保存したcsvファイルの名称を拡張子を付けずに入力してください．");
                 str = br.readLine();
-                BufferedReader bfr = new BufferedReader(new InputStreamReader(new FileInputStream("ファイルの場所" + str + ".csv")));
+                BufferedReader bfr = new BufferedReader(new InputStreamReader(new FileInputStream("C:\\Users\\azhid\\IdeaProjects\\Kotodaman\\src\\kotodaman\\" + str + ".csv")));
 
                 for(int i=0;i<party.length;i++){
                     party[i] = bfr.readLine();
